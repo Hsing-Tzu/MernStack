@@ -14,10 +14,10 @@ mongoose.connect("mongodb+srv://41071105H:41071105H@cluster0.h9q2tfk.mongodb.net
   useUnifiedTopology: true,
 });
 
-app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build",     
-    "index.html"));
- });
+app.get('/*', (req, res) => {
+  res.sendFile('index.html', { root: __dirname + '/client/build/' });
+});
+
 
 const userSchema = new mongoose.Schema({
   user_name: String,
