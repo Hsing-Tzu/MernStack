@@ -22,7 +22,7 @@ jobs:
       - name: Install server npm packages
         uses: bahmutov/npm-install@v1
         with:
-          working-directory: mern/server
+          working-directory: .
 
       - name: Install client npm packages
         uses: bahmutov/npm-install@v1
