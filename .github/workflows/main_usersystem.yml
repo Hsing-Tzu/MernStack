@@ -14,33 +14,28 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-        with: 
-          ref: 'main'
+      - uses: actions/checkout@v4
 
-      - name: Install server npm packages
-        uses: bahmutov/npm-install@v1
+      - name: Set up Node.js version
+        uses: actions/setup-node@v3
         with:
-          working-directory: .
+          node-version: '18.x'
 
-      - name: Install client npm packages
-        uses: bahmutov/npm-install@v1
+      - name: npm install, build, and test
+        run: |
+          npm install
+          npm run build --if-present
+          npm run test --if-present
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
         with:
-          working-directory: ./client
-
+          name: node-app
+          path: .
       - name: Start server in the background
         env: 
           ATLAS_URI: ${{ secrets.ATLAS_URI }}
-        run: (echo "ATLAS_URI=$ATLAS_URI" > config.env  && npm start &)
-
-      - name: Start React app in the background
-        run: (cd ./client && npm start &)
-
-      - name: Install Cypress and run tests
-        uses: cypress-io/github-action@v2
-        with:
-          working-directory: ./client
+        run: (cd mern/server && echo "ATLAS_URI=$ATLAS_URI" > config.env  && npm start &)
 
   deploy:
     runs-on: ubuntu-latest
