@@ -35,7 +35,7 @@ jobs:
       - name: Start server in the background
         env: 
           ATLAS_URI: ${{ secrets.ATLAS_URI }}
-        run: (cd mern/server && echo "ATLAS_URI=$ATLAS_URI" > config.env  && npm start &)
+        run: (echo "ATLAS_URI=$ATLAS_URI" > config.env  && npm start &)
 
   deploy:
     runs-on: ubuntu-latest
