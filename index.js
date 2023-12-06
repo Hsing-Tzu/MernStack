@@ -5,23 +5,25 @@ const ObjectId = mongoose.Types.ObjectId;
 const path = require("path");
 const app = express();
 
+// Use environment variables for sensitive information
+const mongoDBConnectionString = process.env.MONGODB_URI || "mongodb+srv://41071105H:41071105H@cluster0.h9q2tfk.mongodb.net/your_database_name";
+
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Serve static files from the React build directory
 app.use(express.static('./client/build'));
 
 // For any other route, serve the React app's index.html
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "build",     
-  "index.html"));
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
 
-mongoose.connect("mongodb+srv://41071105H:41071105H@cluster0.h9q2tfk.mongodb.net/", {
+mongoose.connect(mongoDBConnectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-
-
 
 const userSchema = new mongoose.Schema({
   user_name: String,
@@ -33,8 +35,14 @@ const userSchema = new mongoose.Schema({
 
 const UserModel = mongoose.model("User", userSchema);
 
+// General error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
+});
+
 // Create a new user
-app.post("/createUser", (req, res) => {
+app.post("/createUser", cors(), (req, res) => {
   const userData = req.body;
   UserModel.create(userData)
     .then((newUser) => {
@@ -45,8 +53,7 @@ app.post("/createUser", (req, res) => {
       console.error(err);
       res.status(500).send("Error creating user");
     });
-  });
-
+});
 
 app.get("/users", (req, res) => {
   UserModel.find({})
@@ -76,7 +83,6 @@ app.put("/updateUser/:id", (req, res) => {
       res.status(500).send("Error updating user");
     });
 });
-
 
 app.delete("/deleteUser/:id", async (req, res) => {
   const id = req.params.id;
@@ -111,7 +117,6 @@ app.get("/searchUsersByName", (req, res) => {
       res.status(500).send("Error searching for users by name");
     });
 });
-
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
