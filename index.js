@@ -8,7 +8,11 @@ const app = express();
 // Use environment variables for sensitive information
 const mongoDBConnectionString = process.env.MONGODB_URI || "mongodb+srv://41071105H:41071105H@cluster0.h9q2tfk.mongodb.net/test";
 
-app.use(cors());
+// Enable CORS for a specific origin
+app.use(cors({
+  origin: 'https://azuremern.azurewebsites.net',
+  credentials: true, // You might need to include this depending on your use case
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
