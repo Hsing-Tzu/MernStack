@@ -6,7 +6,7 @@ const path = require("path");
 const app = express();
 
 // Use environment variables for sensitive information
-const mongoDBConnectionString = process.env.MONGODB_URI || "mongodb+srv://41071105H:41071105H@cluster0.h9q2tfk.mongodb.net/your_database_name";
+const mongoDBConnectionString = process.env.MONGODB_URI || "mongodb+srv://41071105H:41071105H@cluster0.h9q2tfk.mongodb.net/";
 
 app.use(cors());
 app.use(express.json());
