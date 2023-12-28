@@ -16,7 +16,7 @@ function App() {
 
   const getUsers = () => {
     setIsLoading(true);
-    Axios.get("https://usersystem.azurewebsites.net/users")
+    Axios.get("https://azuremern.azurewebsites.net/users")
       .then((response) => {
         setUserList(response.data);
       })
@@ -36,7 +36,7 @@ function App() {
   };
 
   const addUser = () => {
-    Axios.post("https://usersystem.azurewebsites.net/createUser", {
+    Axios.post("https://azuremern.azurewebsites.net/createUser", {
       user_name: username,
       user_birthday: birthday,
       user_phone: phone,
@@ -65,7 +65,7 @@ function App() {
   const saveUser = (userId) => {
     const userToUpdate = userList.find((user) => user._id === userId);
     if (userToUpdate) {
-      Axios.put(`https://usersystem.azurewebsites.net/updateUser/${userId}`, userToUpdate).then(() => {
+      Axios.put(`https://azuremern.azurewebsites.net/updateUser/${userId}`, userToUpdate).then(() => {
         getUsers();
       });
     }
@@ -82,14 +82,14 @@ function App() {
   };
 
   const deleteUser = (userId) => {
-    Axios.delete(`https://usersystem.azurewebsites.net/deleteUser/${userId}`).then(() => {
+    Axios.delete(`https://azuremern.azurewebsites.net/deleteUser/${userId}`).then(() => {
       getUsers();
     });
   };
 
   // Function to search users by name
 const searchUsersByName = () => {
-  Axios.get(`https://usersystem.azurewebsites.net/searchUsersByName?name=${searchQuery}`)
+  Axios.get(`https://azuremern.azurewebsites.net/searchUsersByName?name=${searchQuery}`)
     .then((response) => {
       setSearchResults(response.data);
     })
