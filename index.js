@@ -6,7 +6,7 @@ const path = require("path");
 const app = express();
 
 // Use environment variables for sensitive information
-const mongoDBConnectionString = process.env.MONGODB_URI || "mongodb+srv://41071105H:41071105H@cluster0.h9q2tfk.mongodb.net/?retryWrites=true&w=majority;
+const mongoDBConnectionString = process.env.MONGODB_URI || "mongodb+srv://41071105H:41071105H@cluster0.h9q2tfk.mongodb.net/?retryWrites=true&w=majority";
 app.use(cors());
 // // Enable CORS for a specific origin
 // app.use(cors({
