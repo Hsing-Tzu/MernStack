@@ -1,10 +1,8 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 function App() {
-  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [birthday, setBirthday] = useState("");
   const [phone, setPhone] = useState("");
@@ -139,7 +137,7 @@ const searchUsersByName = () => {
             setPassword(event.target.value);
           }}
         />
-        <button onClick={() => navigate("addUser")}>Add User</button>
+        <button onClick={addUser}>Add User</button>
       </div>
       <div className="users">
         <h2>User List</h2>
