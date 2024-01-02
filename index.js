@@ -14,8 +14,6 @@ app.use(cors());
 //   credentials: true, // You might need to include this depending on your use case
 // }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 // Serve static files from the React build directory
 app.use(express.static('./client/build'));
 
